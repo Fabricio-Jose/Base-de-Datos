@@ -1,0 +1,99 @@
+CREATE DATABASE Hotel;
+
+USE Hotel;
+
+CREATE TABLE Hotel (
+	Codigo INTEGER PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Direccion VARCHAR(50),
+    Codigo_Departamento INTEGER
+);
+
+CREATE TABLE Departamento(
+	Codigo INTEGER PRIMARY KEY
+);
+
+CREATE TABLE Cuarto(
+	Piso INTEGER,
+    Numero INTEGER,
+    Numero_camas INTEGER,
+    Valor_dia INTEGER,
+    Amenidades Varchar(30),
+    Codigo_hotel INTEGER,
+    PRIMARY KEY (Piso, Numero)
+);
+
+CREATE TABLE Estandar(
+	Piso INTEGER,
+    Numero INTEGER,
+    PRIMARY KEY (Piso, Numero)
+);
+
+CREATE TABLE Lujo(
+	Piso INTEGER,
+    Numero INTEGER,
+    Tarifa_anticipada INTEGER,
+    PRIMARY KEY (Piso, Numero)
+);
+
+CREATE TABLE SuperLujo(
+	Piso INTEGER,
+    Numero INTEGER,
+    Tarifa_anticipada INTEGER,
+    Balcon_privado BOOL,
+    PRIMARY KEY (Piso, Numero)
+);
+
+CREATE TABLE Huesped(
+	Codigo_hotel INTEGER PRIMARY KEY,
+    Nombres VARCHAR(50),
+    Primer_apellido VARCHAR(50),
+    Segundo_apellido VARCHAR(50),
+    Correo_electronico VARCHAR(50)
+);
+
+CREATE TABLE Extranjero(
+	Codigo_hotel INTEGER,
+    Pasaporte VARCHAR(50),
+    Pais_procedencia VARCHAR(50),
+    PRIMARY KEY (Codigo_hotel, Pasaporte)
+    );
+
+CREATE TABLE Nacional(
+	Codigo_hotel INTEGER,
+    DNI INTEGER,
+    PRIMARY KEY (Codigo_hotel, DNI)
+);
+
+CREATE TABLE Cuarto_Huesped_reservado(
+	Piso INTEGER,
+    Numero INTEGER,
+    Codigo_hotel INTEGER,
+    Fecha_inicio DATE,
+    Cantidad_dias INTEGER,
+    Fecha_reserva INTEGER,
+    PRIMARY KEY (Piso, Numero, Codigo_hotel)
+);
+
+CREATE TABLE Cuarto_Huesped_alquilado(
+	Piso INTEGER,
+    Numero INTEGER,
+    Codigo_hotel INTEGER,
+    Fecha_entrada DATE,
+    Hora_entrada INTEGER,
+    Hora_salida INTEGER,
+    Valor_pagado INTEGER,
+    PRIMARY KEY (Piso, Numero, Codigo_hotel)
+);
+
+ALTER TABLE Hotel ADD FOREIGN KEY (Codigo_Departamento) REFERENCES Departamento(Codigo);
+ALTER TABLE Cuarto ADD FOREIGN KEY (Codigo_Hotel) REFERENCES Hotel(Codigo);
+ALTER TABLE Estandar ADD FOREIGN KEY (Piso, Numero) REFERENCES Cuarto(Piso, Numero);
+ALTER TABLE Lujo ADD FOREIGN KEY (Piso, Numero) REFERENCES Cuarto(Piso, Numero);
+ALTER TABLE SuperLujo ADD FOREIGN KEY (Piso, Numero) REFERENCES Cuarto(Piso, Numero);
+ALTER TABLE Cuarto_Huesped_reservado ADD FOREIGN KEY (Piso, Numero) REFERENCES Cuarto(Piso, Numero);
+ALTER TABLE Cuarto_Huesped_reservado ADD FOREIGN KEY (Codigo_hotel) REFERENCES Huesped(Codigo_hotel);
+ALTER TABLE Cuarto_Huesped_alquilado ADD FOREIGN KEY (Piso, Numero) REFERENCES Cuarto(Piso, Numero);
+ALTER TABLE Cuarto_Huesped_alquilado ADD FOREIGN KEY (Codigo_hotel) REFERENCES Huesped(Codigo_hotel);
+ALTER TABLE Extranjero ADD FOREIGN KEY (Codigo_hotel) REFERENCES Huesped(Codigo_hotel);
+ALTER TABLE Nacional ADD FOREIGN KEY (Codigo_hotel) REFERENCES Huesped(Codigo_hotel);

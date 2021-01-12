@@ -1,0 +1,48 @@
+CREATE DATABASE Empresa;
+
+USE Empresa;
+
+CREATE TABLE Cliente (
+	Codigo INTEGER PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Direccion VARCHAR(50),
+    Telefono INTEGER,
+    Estado INTEGER,
+    Correo_electronico VARCHAR(50),
+    Edad INTEGER,
+    Limite_credito INTEGER,
+    Empresa_id INTEGER
+);
+
+CREATE TABLE Empresa(
+	id INTEGER PRIMARY KEY
+);
+
+CREATE TABLE Producto(
+	Codigo INTEGER PRIMARY KEY,
+    Categoria VARCHAR(50),
+    Nombre VARCHAR(50),
+    Precio INTEGER,
+    Pedido_numero INTEGER,
+    Empresa_id INTEGER
+);
+
+CREATE TABLE Producto_Pedido(
+	Pedido_numero INTEGER,
+    Producto_codigo INTEGER,
+    Cantidad INTEGER,
+    PRIMARY KEY (Pedido_numero, Producto_codigo)
+);
+
+CREATE TABLE Pedido(
+	Numero INTEGER PRIMARY KEY,
+    Fecha DATE,
+    Cliente_codigo INTEGER,
+    Producto_codigo INTEGER
+);
+
+ALTER TABLE Cliente ADD FOREIGN KEY (Empresa_id) REFERENCES Empresa (id);
+ALTER TABLE Producto ADD FOREIGN KEY (Empresa_id) REFERENCES Empresa (id);
+ALTER TABLE Producto ADD FOREIGN KEY (Pedido_numero, Codigo) REFERENCES Producto_Pedido(Pedido_numero, Producto_codigo);
+ALTER TABLE Pedido ADD FOREIGN KEY (Numero, Producto_codigo) REFERENCES Producto_Pedido (Pedido_numero, Producto_codigo);
+ALTER TABLE Pedido ADD FOREIGN KEY (Cliente_codigo) REFERENCES Cliente (Codigo);

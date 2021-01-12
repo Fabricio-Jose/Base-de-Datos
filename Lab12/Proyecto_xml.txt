@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
+<!-- Active URL: https://ondras.zarovi.cz/sql/demo/?keyword=default -->
+<sql>
+<datatypes db="mysql">
+  <group label="Numeric" color="rgb(238,238,170)">
+    <type label="Integer" length="0" sql="INTEGER" quote=""/>
+    <type label="TINYINT" length="0" sql="TINYINT" quote=""/>
+    <type label="SMALLINT" length="0" sql="SMALLINT" quote=""/>
+    <type label="MEDIUMINT" length="0" sql="MEDIUMINT" quote=""/>
+    <type label="INT" length="0" sql="INT" quote=""/>
+    <type label="BIGINT" length="0" sql="BIGINT" quote=""/>
+    <type label="Decimal" length="1" sql="DECIMAL" re="DEC" quote=""/>
+    <type label="Single precision" length="0" sql="FLOAT" quote=""/>
+    <type label="Double precision" length="0" sql="DOUBLE" re="DOUBLE" quote=""/>
+  </group>
+  <group label="Character" color="rgb(255,200,200)">
+    <type label="Char" length="1" sql="CHAR" quote="'"/>
+    <type label="Varchar" length="1" sql="VARCHAR" quote="'"/>
+    <type label="Text" length="0" sql="MEDIUMTEXT" re="TEXT" quote="'"/>
+    <type label="Binary" length="1" sql="BINARY" quote="'"/>
+    <type label="Varbinary" length="1" sql="VARBINARY" quote="'"/>
+    <type label="BLOB" length="0" sql="BLOB" re="BLOB" quote="'"/>
+  </group>
+  <group label="Date &amp; Time" color="rgb(200,255,200)">
+    <type label="Date" length="0" sql="DATE" quote="'"/>
+    <type label="Time" length="0" sql="TIME" quote="'"/>
+    <type label="Datetime" length="0" sql="DATETIME" quote="'"/>
+    <type label="Year" length="0" sql="YEAR" quote=""/>
+    <type label="Timestamp" length="0" sql="TIMESTAMP" quote="'"/>
+  </group>
+  <group label="Miscellaneous" color="rgb(200,200,255)">
+    <type label="ENUM" length="1" sql="ENUM" quote=""/>
+    <type label="SET" length="1" sql="SET" quote=""/>
+    <type label="Bit" length="0" sql="bit" quote=""/>
+  </group>
+</datatypes><table x="252" y="5" name="Persona">
+<row name="DNI" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Nombres" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Primer_apellido" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Segundo_apellido" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Fec_Nac" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>DNI</part>
+</key>
+</table>
+<table x="17" y="163" name="Profesor">
+<row name="DNI" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Persona" row="DNI" />
+</row>
+<row name="Especialidad_Investigación" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Código_Proy" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Proyecto_Investigación" row="Código" />
+</row>
+<key type="PRIMARY" name="">
+<part>DNI</part>
+</key>
+</table>
+<table x="616" y="37" name="Alumno">
+<row name="DNI" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Persona" row="DNI" />
+</row>
+<key type="PRIMARY" name="">
+<part>DNI</part>
+</key>
+</table>
+<table x="427" y="155" name="Becario">
+<row name="DNI" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Alumno" row="DNI" />
+</row>
+<row name="DNI_Profesor" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Profesor" row="DNI" />
+</row>
+<key type="PRIMARY" name="">
+<part>DNI</part>
+</key>
+</table>
+<table x="873" y="36" name="No_Becario">
+<row name="DNI" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Alumno" row="DNI" />
+</row>
+<key type="PRIMARY" name="">
+<part>DNI</part>
+</key>
+</table>
+<table x="191" y="291" name="Profesor_Becario_ProyectoInv">
+<row name="DNI_Profesor" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Profesor" row="DNI" />
+</row>
+<row name="DNI_Becario" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Becario" row="DNI" />
+</row>
+<row name="Código_Proyecto" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Proyecto_Investigación" row="Código" />
+</row>
+<key type="PRIMARY" name="">
+<part>DNI_Profesor</part>
+<part>DNI_Becario</part>
+<part>Código_Proyecto</part>
+</key>
+</table>
+<table x="196" y="437" name="Proyecto_Investigación">
+<row name="Código" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Presupuesto" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Fec_inicio" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Fec_fin" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>Código</part>
+</key>
+</table>
+<table x="588" y="375" name="Investigación_Básica">
+<row name="Código_proy" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Proyecto_Investigación" row="Código" />
+</row>
+<row name="Nom_Universidad" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>Código_proy</part>
+</key>
+</table>
+<table x="570" y="490" name="Investigación_Aplicada">
+<row name="Código_proy" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Proyecto_Investigación" row="Código" />
+</row>
+<row name="Nom_Empresas" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>Código_proy</part>
+</key>
+</table>
+<table x="608" y="180" name="Hito">
+<row name="Número" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Objetivos" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Fec_inicio" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Fec_fin" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Código_Proyecto" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Proyecto_Investigación" row="Código" />
+</row>
+<key type="PRIMARY" name="">
+<part>Número</part>
+</key>
+</table>
+<table x="815" y="151" name="Alumno_No_Becario">
+<row name="DNI_Alumno" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Alumno" row="DNI" />
+</row>
+<row name="DNI_No_Becario" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="No_Becario" row="DNI" />
+</row>
+<key type="PRIMARY" name="">
+<part>DNI_Alumno</part>
+<part>DNI_No_Becario</part>
+</key>
+</table>
+</sql>

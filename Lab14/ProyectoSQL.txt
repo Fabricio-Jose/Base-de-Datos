@@ -1,0 +1,83 @@
+CREATE DATABASE Proyecto;
+
+USE Proyecto;
+
+CREATE TABLE Profesor (
+	DNI INTEGER PRIMARY KEY,
+    Especialidad_investigacion VARCHAR(50),
+    Codigo_Proy INTEGER
+);
+
+CREATE TABLE Persona(
+	DNI INTEGER PRIMARY KEY,
+    Nombres VARCHAR(50),
+    Primer_apellido VARCHAR(50),
+    Segundo_apellido VARCHAR(50),
+    Fec_nac DATE
+);
+
+CREATE TABLE Alumno(
+	DNI INTEGER PRIMARY KEY
+);
+
+CREATE TABLE Becario(
+	DNI INTEGER PRIMARY KEY,
+    DNI_Profesor INTEGER
+);
+
+CREATE TABLE No_Becario(
+	DNI INTEGER PRIMARY KEY
+);
+
+CREATE TABLE Alumno_No_Becario(
+	DNI_Alumno INTEGER,
+    DNI_No_Becario INTEGER,
+    PRIMARY KEY (DNI_Alumno, DNI_No_Becario)
+);
+
+CREATE TABLE Profesor_Becario_ProyectoInv(
+	DNI_Profesor INTEGER,
+    DNI_Becario INTEGER,
+    Codigo_Proyecto INTEGER,
+    PRIMARY KEY (DNI_Profesor, DNI_Becario, Codigo_Proyecto)
+);
+
+CREATE TABLE Proyecto_Investigacion(
+	Codigo INTEGER PRIMARY KEY,
+    Presupuesto VARCHAR(50),
+    Fec_inicio DATE,
+    Fec_fin DATE
+);
+
+CREATE TABLE Investigacion_Basica(
+	Codigo_proy INTEGER PRIMARY KEY,
+    Nom_Universidad VARCHAR(50)
+    );
+
+CREATE TABLE Investigacion_Aplicada(
+	Codigo_proy INTEGER PRIMARY KEY,
+    Nom_Empresa VARCHAR(50)
+);
+
+CREATE TABLE Hito(
+	Numero INTEGER PRIMARY KEY,
+    Objetivo VARCHAR(50),
+    Fec_inicio DATE,
+    Fec_fin DATE,
+    Codigo_Proyecto INTEGER
+);
+
+ALTER TABLE Profesor ADD FOREIGN KEY (DNI) REFERENCES Persona(DNI);
+ALTER TABLE Profesor ADD FOREIGN KEY (Codigo_Proy) REFERENCES Proyecto_Investigacion(Codigo);
+ALTER TABLE Becario ADD FOREIGN KEY (DNI_Profesor) REFERENCES Profesor(DNI);
+ALTER TABLE Becario ADD FOREIGN KEY (DNI) REFERENCES Alumno(DNI);
+ALTER TABLE Alumno ADD FOREIGN KEY (DNI) REFERENCES Persona(DNI);
+ALTER TABLE No_Becario ADD FOREIGN KEY (DNI) REFERENCES Alumno(DNI);
+ALTER TABLE Alumno_No_Becario ADD FOREIGN KEY (DNI_Alumno) REFERENCES Alumno(DNI);
+ALTER TABLE Alumno_No_Becario ADD FOREIGN KEY (DNI_No_Becario) REFERENCES No_Becario(DNI);
+ALTER TABLE Profesor_Becario_ProyectoInv ADD FOREIGN KEY (DNI_Profesor) REFERENCES Profesor(DNI);
+ALTER TABLE Profesor_Becario_ProyectoInv ADD FOREIGN KEY (DNI_Becario) REFERENCES Becario(DNI);
+ALTER TABLE Profesor_Becario_ProyectoInv ADD FOREIGN KEY (Codigo_Proyecto) REFERENCES Proyecto_Investigacion(Codigo);
+ALTER TABLE Investigacion_Basica ADD FOREIGN KEY (Codigo_Proy) REFERENCES Proyecto_Investigacion(Codigo);
+ALTER TABLE Investigacion_Aplicada ADD FOREIGN KEY (Codigo_Proy) REFERENCES Proyecto_Investigacion(Codigo);
+ALTER TABLE Hito ADD FOREIGN KEY (Codigo_Proyecto) REFERENCES Proyecto_Investigacion(Codigo);
